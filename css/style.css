@@ -14,7 +14,7 @@ body.theme-blue {
   color: #003366;
 }
 
-/* === RESUME CARD === */
+/* === RESUME CARD STYLES === */
 .resume-card {
   background: #fff;
   padding: 20px;
@@ -28,25 +28,25 @@ body.theme-blue {
 
 .resume-card img {
   width: 120px;
-  height: auto;
+  height: 120px;
   object-fit: cover;
   border-radius: 5%;
   border: 3px solid #ccc;
   display: block;
-  margin: 0 auto 20px auto;
+  margin: 0 auto 20px;
 }
 
 /* === THEME VARIANTS FOR RESUME CARD === */
-.theme-dark .resume-card {
+body.theme-dark .resume-card {
   background: #1e1e1e;
   color: #f1f1f1;
 }
 
-.theme-blue .resume-card {
+body.theme-blue .resume-card {
   border: 2px solid #0056b3;
 }
 
-/* === FORM SECTION === */
+/* === FORM STYLING === */
 .form-section {
   margin-bottom: 1.5rem;
 }
@@ -54,19 +54,43 @@ body.theme-blue {
 .section-header i {
   margin-right: 8px;
 }
- .btn-warning {
-    color: #212529;
-    background-color: #ffffffed; 
-    border-color: #ffc107;
-    margin: 5px;
-}
-.justify-content-between {
-    justify-content: space-between !important;
-    margin-bottom: 10px;
+
+.btn-warning {
+  color: #212529;
+  background-color: #ffffffed;
+  border-color: #ffc107;
+  margin: 5px;
 }
 
-/* === RESPONSIVE DESIGN === */
+.justify-content-between {
+  justify-content: space-between !important;
+  margin-bottom: 10px;
+}
+
+/* === INPUT STYLING === */
+input,
+textarea,
+select {
+  font-size: 1rem;
+}
+
+/* === BUTTON STYLING === */
+.btn {
+  padding: 8px 16px;
+  font-size: 1rem;
+  border-radius: 5px;
+}
+.mb-1, .my-1 {
+    margin-top: .55rem !important;
+ 
+}
+
+/* === RESPONSIVE DESIGN (MOBILE) === */
 @media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+
   .resume-card {
     padding: 15px;
   }
@@ -82,10 +106,6 @@ body.theme-blue {
 
   p {
     font-size: 0.95rem;
-  }
-
-  .container {
-    padding: 10px;
   }
 
   .form-section {
@@ -138,10 +158,15 @@ body.theme-blue {
   }
 
   button,
-  .btn {
+  .btn,
+  .form-control,
+  .form-section,
+  select,
+  input,
+  textarea,
+  .navbar,
+  #themeSelectionScreen,
+  #mainResumeBuilder > .container > .d-flex {
     display: none !important;
-    
   }
-  
 }
-
