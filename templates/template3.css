@@ -41,6 +41,12 @@ h2#previewName {
   font-weight: 700;
   color: #222;
 }
+h2 {
+    border-bottom: 2px solid #20c997;
+    padding-bottom: 5px;
+    margin-top: 30px;
+
+}
 
 h4 {
   font-size: 1.2rem;
@@ -62,6 +68,15 @@ p {
   margin-right: 130px;
   font-size: 0.95rem;
   color: #555;
+}
+#bio {
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    background: #e6faf4ed;
+    padding: 10px 15px;
+    border-left: 4px solid #20c997;
+    border-radius: 4px;
 }
 
 /* === CONTACT INFO === */
