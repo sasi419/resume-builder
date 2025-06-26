@@ -1,0 +1,152 @@
+/* === BASE STYLES === */
+body {
+  background: #c5e4f4;
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 20px;
+  line-height: 1.6;
+}
+
+/* === RESUME CONTAINER === */
+#resumePreview {
+  background: #ffffff;
+  border-left: 6px solid #007bff;
+  padding: 30px;
+  border-radius: 10px;
+  max-width: 800px;
+  margin: 0 auto;
+  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.15);
+  transition: transform 0.3s ease;
+}
+
+#resumePreview:hover {
+  transform: scale(1.01);
+}
+
+/* === HEADINGS === */
+h1, h2, h3, h4 {
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: #0077ff;
+}
+
+h1 {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+h2 {
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 5px;
+  margin-top: 30px;
+  font-size: 1.4rem;
+}
+
+h4 {
+  margin-top: 20px;
+  font-size: 1.1rem;
+}
+
+/* === SECTION STYLING === */
+.section {
+  margin-bottom: 25px;
+}
+
+.section p {
+  margin: 0;
+}
+
+/* === BIO / PARAGRAPH TEXT === */
+#bio {
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  background: #f1faff;
+  padding: 10px 15px;
+  border-left: 4px solid #007bff;
+  border-radius: 4px;
+}
+
+/* === PROFILE IMAGE === */
+#resumePreview img.profile-pic {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 3px double #007bff;
+  margin-bottom: 10px;
+  display: block;
+}
+
+/* === CONTACT INFO === */
+.contact-info {
+  font-size: 0.9rem;
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.contact-info i {
+  color: #007bff;
+  margin-right: 5px;
+}
+
+/* === LISTS === */
+ul {
+  padding-left: 20px;
+  list-style-type: disc;
+}
+
+ul li {
+  margin-bottom: 6px;
+  font-size: 0.95rem;
+}
+
+/* === METER (SKILL LEVELS) === */
+meter {
+  width: 100%;
+  height: 12px;
+  border-radius: 20px;
+  background: #d3e7f8;
+}
+
+meter::-webkit-meter-bar {
+  background: #d3e7f8;
+  border-radius: 20px;
+}
+
+meter::-webkit-meter-optimum-value {
+  background: #007bff;
+  border-radius: 20px;
+}
+
+meter::-moz-meter-bar {
+  background: #007bff;
+}
+
+/* === RESPONSIVE LAYOUT === */
+@media screen and (max-width: 600px) {
+  #resumePreview {
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+  }
+
+  h4 {
+    font-size: 1rem;
+  }
+
+  #resumePreview img.profile-pic {
+    width: 80px;
+    height: 80px;
+  }
+}

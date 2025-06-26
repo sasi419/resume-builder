@@ -1,0 +1,134 @@
+/* === BASE STYLES === */
+body {
+  background-color: #eef6f6;
+  color: #333;
+  font-family: 'Work Sans', sans-serif;
+  margin: 0;
+  padding: 20px;
+  line-height: 1.6;
+}
+
+/* === RESUME CONTAINER === */
+#resumePreview {
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 800px;
+  margin: 0 auto;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
+  position: relative;
+}
+
+/* === PROFILE IMAGE RIGHT POSITION === */
+#previewImg {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  width: 100px;
+  height: auto;
+  border-radius: 5%;
+  object-fit: cover;
+  border: 3px dashed #20c997;
+  background-color: #fff;
+}
+
+/* === HEADINGS === */
+h2#previewName {
+  margin-top: 0;
+  margin-right: 130px;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #222;
+}
+
+h4 {
+  font-size: 1.2rem;
+  margin-top: 30px;
+  color: #20c997;
+  border-bottom: 2px solid #20c997;
+  padding-bottom: 5px;
+}
+
+/* === PARAGRAPHS === */
+p {
+  font-size: 0.95rem;
+  color: #444;
+  margin-bottom: 10px;
+}
+
+/* === BIO TEXT === */
+#previewBio {
+  margin-right: 130px;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+/* === CONTACT INFO === */
+#previewEmail,
+#previewPhone,
+#previewDOB {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+#previewEmail i,
+#previewPhone i,
+#previewDOB i {
+  color: #20c997;
+  margin-right: 5px;
+}
+
+/* === SKILLS BAR (METER) === */
+meter {
+  width: 100%;
+  height: 12px;
+  background: #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+meter::-webkit-meter-bar {
+  background: #ddd;
+  border-radius: 8px;
+}
+
+meter::-webkit-meter-optimum-value {
+  background: #20c997;
+  border-radius: 8px;
+}
+
+meter::-moz-meter-bar {
+  background: #20c997;
+}
+
+/* === LISTS === */
+ul {
+  padding-left: 20px;
+  list-style-type: disc;
+}
+
+ul li {
+  margin-bottom: 6px;
+  color: #444;
+  font-size: 0.95rem;
+}
+
+/* === Responsive Design === */
+@media screen and (max-width: 600px) {
+  #resumePreview {
+    padding: 20px;
+  }
+
+  #previewImg {
+    position: static;
+    display: block;
+    margin: 0 auto 15px;
+  }
+
+  h2#previewName,
+  #previewBio {
+    margin-right: 0;
+    text-align: center;
+  }
+}

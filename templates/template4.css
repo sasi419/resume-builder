@@ -1,0 +1,165 @@
+/* === BASE STYLES === */
+body {
+  background-color: #f4f0ec;
+  color: #2c2c2c;
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 20px;
+  line-height: 1.75;
+}
+
+/* === RESUME PREVIEW CONTAINER === */
+#resumePreview {
+  background: #ffffff;
+  padding: 50px 40px;
+  border-radius: 16px;
+  max-width: 850px;
+  margin: 0 auto;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e4d7ce;
+  transition: all 0.3s ease;
+}
+
+/* === HEADINGS === */
+h1 {
+  font-family: 'Times New Roman', serif;
+  color: #4a1c1c;
+  font-size: 2.2rem;
+  font-weight: bold;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+h2 {
+  font-family: 'Times New Roman', serif;
+  color: #8b0000;
+  font-size: 1.5rem;
+  margin-top: 40px;
+  margin-bottom: 10px;
+  border-bottom: 2px solid #d8b4a0;
+  padding-bottom: 6px;
+}
+
+h4 {
+  font-family: 'Times New Roman', serif;
+  color: #8b0000;
+  font-size: 1.15rem;
+  margin-top: 24px;
+  margin-bottom: 8px;
+}
+
+/* === PARAGRAPH & TEXT === */
+p {
+  font-size: 1.05rem;
+  color: #333;
+  margin-bottom: 10px;
+  line-height: 1.6;
+}
+
+#bio {
+  font-size: 1.05rem;
+  color: #2c2c2c;
+  margin-bottom: 18px;
+  background-color: #fdf9f6;
+  padding: 12px;
+  border-left: 4px solid #8b0000;
+}
+
+/* === CONTACT INFO === */
+.contact-info {
+  font-size: 0.95rem;
+  color: #5a3e36;
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.contact-info i {
+  color: #8b0000;
+  margin-right: 6px;
+}
+
+/* === PROFILE IMAGE === */
+#resumePreview img.profile-pic {
+  width: 120px;
+  height: auto;
+  object-fit: cover;
+  border-radius: 5%;
+  border: 4px double #8b0000;
+  margin: 0 auto 20px;
+  display: block;
+  box-shadow: 0 0 10px rgba(139, 0, 0, 0.2);
+}
+
+/* === LIST SECTIONS === */
+ul {
+  padding-left: 22px;
+  list-style-type: disc;
+  margin-bottom: 16px;
+}
+
+ul li {
+  font-size: 1rem;
+  color: #444;
+  margin-bottom: 6px;
+}
+
+/* === METER (Skill Bars) === */
+meter {
+  width: 100%;
+  height: 14px;
+  background: #e0cfc2;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+meter::-webkit-meter-bar {
+  background: #e0cfc2;
+  border-radius: 8px;
+}
+
+meter::-webkit-meter-optimum-value {
+  background: #8b0000;
+  border-radius: 8px;
+}
+
+meter::-moz-meter-bar {
+  background: #8b0000;
+}
+
+/* === SECTION CONTAINERS (OPTIONAL) === */
+.section-block {
+  padding: 15px 0;
+  border-bottom: 1px dashed #d8b4a0;
+}
+
+/* === RESPONSIVE DESIGN === */
+@media screen and (max-width: 768px) {
+  #resumePreview {
+    padding: 30px 20px;
+  }
+
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+  }
+
+  h4 {
+    font-size: 1rem;
+  }
+
+  .contact-info {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #resumePreview img.profile-pic {
+    width: 100px;
+    height: 100px;
+  }
+}

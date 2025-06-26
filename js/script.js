@@ -1,254 +1,269 @@
-let uploadedImageData = "https://via.placeholder.com/120";
+$(document).ready(function () {
+  let useProgressBar = false; // skill display toggle
 
-$(function () {
   // Initialize datepicker
-  $('#dob').datepicker({ dateFormat: 'dd-mm-yy' });
+  $("#dob").datepicker({ dateFormat: "dd-mm-yy", changeYear: true, yearRange: "1950:2025" });
 
-  // ===============================
-  // Real-time Preview Updater
-  // ===============================
-  function updatePreview() {
-    const name = $('#name').val();
-    const email = $('#email').val();
-    const phone = $('#phone').val();
-    const dob = $('#dob').val();
-    const bio = $('#bio').val();
+  // Toggle skill type: meter/progress
+  $('#toggleSkillType').on('change', function () {
+    useProgressBar = this.checked;
+    updateSkillsPreview();
+  });
 
-    // Build Education HTML
-    let eduHTML = '<ul>';
+  // Bio character counter and preview
+  $('#bio').on('input', function () {
+    const remaining = 200 - $(this).val().length;
+    $('#bioCount').text(`${remaining} characters remaining`);
+    $('#previewBio').text($(this).val());
+  });
+
+  // Live preview: personal info
+  $('#fullName').on('input', function () {
+    $('#previewName').text($(this).val() || 'Your Name');
+  });
+  $('#email').on('input', function () {
+    $('#previewEmail').text("Email: " + $(this).val());
+  });
+  $('#phone').on('input', function () {
+    $('#previewPhone').text("Phone: " + $(this).val());
+  });
+  $('#dob').on('input', function () {
+    $('#previewDOB').text("DOB: " + $(this).val());
+  });
+
+  // Profile image upload
+  $('#profileImageInput').on('change', function (e) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      $('#previewImg').attr('src', e.target.result);
+      localStorage.setItem('profileImage', e.target.result);
+    };
+    reader.readAsDataURL(e.target.files[0]);
+  });
+
+  // Clear form sections
+  $('#educationSection, #experienceSection, #skillsSection').empty();
+
+  // === Education ===
+  $('#addEducation').click(function () {
+    const newEntry = $(`
+      <div class="education-entry mb-2">
+        <input type="text" class="form-control mb-1" placeholder="Institution Name" />
+        <input type="text" class="form-control mb-1" placeholder="Branch / Major" />
+        <input type="text" class="form-control mb-1 year-input" placeholder="From Year" />
+        <input type="text" class="form-control mb-1 year-input" placeholder="Passout Year" />
+        <button class="btn btn-danger btn-sm remove-edu mt-1"><i class="fas fa-trash"></i> Remove</button>
+      </div>`);
+    $('#educationSection').append(newEntry);
+    updateEducationPreview();
+  });
+
+  $(document).on('click', '.remove-edu', function () {
+    $(this).closest('.education-entry').remove();
+    updateEducationPreview();
+  });
+
+  function updateEducationPreview() {
+    let html = '';
     $('#educationSection .education-entry').each(function () {
-      $(this).find('input').each(function () {
-        if ($(this).val().trim()) eduHTML += `<li>${$(this).val()}</li>`;
-      });
+      const [inst, branch, from, to] = $(this).find('input').map(function () {
+        return $(this).val();
+      }).get();
+      html += `<p><strong>${inst}</strong> - ${branch} (${from} to ${to})</p>`;
     });
-    eduHTML += '</ul>';
+    $('#previewEducation').html(html);
+  }
 
-    // Build Experience HTML
-    let expHTML = '<ul>';
+  // === Experience ===
+  $('#addExperience').click(function () {
+    const newEntry = $(`
+      <div class="experience-entry mb-2">
+        <input type="text" class="form-control mb-1" placeholder="Company Name" />
+        <input type="text" class="form-control mb-1 year-input" placeholder="From" />
+        <input type="text" class="form-control mb-1 year-input" placeholder="To" />
+        <textarea class="form-control mb-1" placeholder="Work/Project Description"></textarea>
+        <button class="btn btn-danger btn-sm remove-exp mt-1"><i class="fas fa-trash"></i> Remove</button>
+      </div>`);
+    $('#experienceSection').append(newEntry);
+    updateExperiencePreview();
+  });
+
+  $(document).on('click', '.remove-exp', function () {
+    $(this).closest('.experience-entry').remove();
+    updateExperiencePreview();
+  });
+
+  function updateExperiencePreview() {
+    let html = '';
     $('#experienceSection .experience-entry').each(function () {
-      $(this).find('input, textarea').each(function () {
-        if ($(this).val().trim()) expHTML += `<li>${$(this).val()}</li>`;
-      });
+      const [company, from, to] = $(this).find('input').map(function () {
+        return $(this).val();
+      }).get();
+      const desc = $(this).find('textarea').val();
+      html += `<p><strong>${company}</strong> (${from} to ${to})<br>${desc}</p>`;
     });
-    expHTML += '</ul>';
+    $('#previewExperience').html(html);
+  }
 
-    // Build Skills HTML
-    let skillHTML = '';
-    $('.skill-entry').each(function () {
-      const skill = $(this).find('input[type=text]').val();
-      const level = $(this).find('input[type=range]').val();
-      if (skill.trim()) {
-        skillHTML += `
-          <div>${skill}
-            <div class="progress mb-2">
-              <div class="progress-bar" style="width:${level}%">${level}%</div>
-            </div>
-          </div>`;
+  // === Skills ===
+  $('#addSkill').click(function () {
+    const newSkill = $(`
+      <div class="skill-entry mb-2">
+        <input type="text" class="form-control mb-1" placeholder="Skill Name (e.g. HTML)" />
+        <input type="range" class="custom-range" min="0" max="100" />
+        <button class="btn btn-danger btn-sm mt-1 remove-skill"><i class="fas fa-trash"></i> Remove</button>
+      </div>`);
+    $('#skillsSection').append(newSkill);
+    updateSkillsPreview();
+  });
+
+  $(document).on('click', '.remove-skill', function () {
+    $(this).closest('.skill-entry').remove();
+    updateSkillsPreview();
+  });
+
+  function updateSkillsPreview() {
+    let html = '';
+    $('#skillsSection .skill-entry').each(function () {
+      const skill = $(this).find('input[type="text"]').val();
+      const level = $(this).find('input[type="range"]').val();
+      if (skill) {
+        if (useProgressBar) {
+          html += `
+            <p><strong>${skill}</strong></p>
+            <div class="progress mb-2" style="height: 16px;">
+              <div class="progress-bar bg-info" role="progressbar" style="width: ${level}%;" aria-valuenow="${level}" aria-valuemin="0" aria-valuemax="100">${level}%</div>
+            </div>`;
+        } else {
+          html += `<p><strong>${skill}</strong><br><meter value="${level}" max="100" style="width: 100%">${level}</meter></p>`;
+        }
+      }
+    });
+    $('#previewSkills').html(html);
+  }
+
+  // Bind all live updates
+  $(document).on('input', '#educationSection input', updateEducationPreview);
+  $(document).on('input', '#experienceSection input, #experienceSection textarea', updateExperiencePreview);
+  $(document).on('input', '#skillsSection input', updateSkillsPreview);
+
+  // === Validation + Save ===
+  $('#saveBtn').click(function () {
+    let messages = [];
+    const name = $('#fullName').val().trim();
+    const email = $('#email').val().trim();
+    const phone = $('#phone').val().trim();
+    const bio = $('#bio').val().trim();
+    const yearPattern = /^\d{4}$/;
+    const emailPattern = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+    const phonePattern = /^\d{10}$/;
+
+    if (!name) messages.push("Full name is required.");
+    if (!emailPattern.test(email)) messages.push("Enter a valid email address.");
+    if (!phonePattern.test(phone)) messages.push("Phone number must be 10 digits.");
+    if (!bio) messages.push("Bio cannot be empty.");
+
+    $('#educationSection .education-entry').each(function () {
+      const from = $(this).find('input[placeholder="From Year"]').val().trim();
+      const to = $(this).find('input[placeholder="Passout Year"]').val().trim();
+      if ((from && !yearPattern.test(from)) || (to && !yearPattern.test(to))) {
+        messages.push("Education years must be 4-digit numbers.");
       }
     });
 
-    // Final compiled preview
-    const content = `
-      <div class="text-center">
-        <img id="resumePhoto" src="${uploadedImageData}" class="mb-3" />
-        <h3>${name}</h3>
-        <p><i class="fas fa-envelope"></i> ${email} | <i class="fas fa-phone"></i> ${phone}</p>
-        <p><i class="fas fa-birthday-cake"></i> ${dob}</p>
-        <p>${bio}</p>
-      </div>
-      <h5><i class="fas fa-graduation-cap"></i> Education</h5>${eduHTML}
-      <h5><i class="fas fa-briefcase"></i> Experience</h5>${expHTML}
-      <h5><i class="fas fa-chart-line"></i> Skills</h5>${skillHTML}
-    `;
-
-    $('#previewContent, #modalPreviewContent').html(content);
-  }
-
-  // ===============================
-  // Event Listeners
-  // ===============================
-  $('#resumeForm').on('input change', 'input, textarea, select', updatePreview);
-  $(document).on('input change', '#skillsSection input', updatePreview);
-
-  $('#bio').on('input', function () {
-    $('#bioCount').text(`${$(this).val().length}/250`);
-  });
-
-  $('#themeSwitcher').on('change', function () {
-    $('body').removeClass().addClass($(this).val());
-    updatePreview();
-  });
-
-  // ===============================
-  // Dynamic Section Adders
-  // ===============================
-  $('#addEducation').click(function () {
-    $('#educationSection').append(`
-      <div class="education-entry mb-3">
-        <input type="text" class="form-control mb-1" placeholder="Institution Name">
-        <input type="text" class="form-control mb-1" placeholder="Branch / Major">
-        <input type="text" class="form-control mb-1" placeholder="From Year">
-        <input type="text" class="form-control mb-1" placeholder="Year of Passout">
-        <button type="button" class="btn btn-sm btn-danger remove">Remove</button>
-      </div>
-    `);
-    updatePreview();
-  });
-
-  $('#addExperience').click(function () {
-    $('#experienceSection').append(`
-      <div class="experience-entry mb-3">
-        <input type="text" class="form-control mb-1" placeholder="Company Name">
-        <input type="text" class="form-control mb-1" placeholder="From (e.g., Jan 2020)">
-        <input type="text" class="form-control mb-1" placeholder="To (e.g., Dec 2022 or Present)">
-        <textarea class="form-control mb-1" placeholder="Activities & Projects"></textarea>
-        <button type="button" class="btn btn-sm btn-danger remove">Remove</button>
-      </div>
-    `);
-    updatePreview();
-  });
-
-  $('#addSkill').click(function () {
-    $('#skillsSection').append(`
-      <div class="skill-entry mb-2">
-        <input type="text" class="form-control mb-1" placeholder="Technical skill">
-        <input type="range" min="0" max="100" class="form-control-range mb-1">
-        <button type="button" class="btn btn-sm btn-danger remove">Remove</button>
-      </div>
-    `);
-    updatePreview();
-  });
-
-  $(document).on('click', '.remove', function () {
-    $(this).parent().remove();
-    updatePreview();
-  });
-
-  // ===============================
-  // Image Upload
-  // ===============================
-  $('#profileImage').on('change', function () {
-    const file = this.files[0];
-    if (file && file.type.startsWith('image/')) {
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        uploadedImageData = e.target.result;
-        updatePreview();
-      };
-      reader.readAsDataURL(file);
-    }
-  });
-
-  // ===============================
-  // Form Submission
-  // ===============================
-  $('#resumeForm').submit(function (e) {
-    e.preventDefault();
-
-    // Validation
-    const email = $('#email').val();
-    const phone = $('#phone').val();
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const phoneRegex = /^[0-9]{10}$/;
-
-    $('#emailError').text(emailRegex.test(email) ? '' : 'Invalid email');
-    $('#phoneError').text(phoneRegex.test(phone) ? '' : 'Invalid phone');
-
-    if (!emailRegex.test(email) || !phoneRegex.test(phone)) return;
-
-    // Education validation
-    let eduValid = true;
-    $('#educationSection .education-entry').each(function () {
-      const fromYear = parseInt($(this).find('input[placeholder="From Year"]').val());
-      const passoutYear = parseInt($(this).find('input[placeholder="Year of Passout"]').val());
-
-      $(this).find('input').each(function () {
-        if (!$(this).val().trim()) eduValid = false;
-      });
-
-      if (isNaN(fromYear) || isNaN(passoutYear)) eduValid = false;
-    });
-
-    // Experience validation
-    let expValid = true;
     $('#experienceSection .experience-entry').each(function () {
-      $(this).find('input').each(function () {
-        if (!$(this).val().trim()) expValid = false;
-      });
+      const from = $(this).find('input[placeholder="From"]').val().trim();
+      const to = $(this).find('input[placeholder="To"]').val().trim();
+      if ((from && !yearPattern.test(from)) || (to && !yearPattern.test(to))) {
+        messages.push("Experience years must be 4-digit numbers.");
+      }
     });
 
-    if (!eduValid) {
-      alert("Please complete all Education fields and ensure years are numeric.");
-      return;
+    if (messages.length > 0) {
+      alert("Please fix the following:\n\n" + messages.join('\n'));
+    } else {
+      alert("Form saved successfully!");
+      // save logic could go here
     }
-
-    if (!expValid) {
-      alert("Please complete all Experience fields.");
-      return;
-    }
-
-    // Save to localStorage
-    const data = $('#resumeForm').serializeArray();
-    localStorage.setItem('resumeData', JSON.stringify(data));
-    alert('Resume saved!');
   });
 
-  // ===============================
-  // Resume Restore from Storage
-  // ===============================
-  if (localStorage.getItem('resumeData')) {
-    const data = JSON.parse(localStorage.getItem('resumeData'));
-    data.forEach(({ name, value }) => {
-      $(`[name="${name}"]`).val(value);
-    });
-    updatePreview();
-  }
-
-  // ===============================
-  // Print from Modal
-  // ===============================
-  $('#printModalResume').click(() => {
-    const element = document.getElementById('modalPreviewContent');
-    html2pdf().from(element).set({
-      margin: 0.5,
-      filename: 'resume.pdf',
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-    }).save();
+  // Print / PDF / Reset
+  $('#printBtn').click(() => window.print());
+  $('#pdfBtn').click(() => html2pdf().from(document.getElementById('resumePreview')).save('My_Resume.pdf'));
+  $('#resetBtn').click(() => {
+    if (confirm("Are you sure you want to reset everything?")) {
+      localStorage.clear();
+      location.reload();
+    }
   });
 
-  // ===============================
-  // Reset Form
-  // ===============================
-  $('#resetBtn').click(function () {
-    localStorage.removeItem('resumeData');
+  // Theme switch (optional)
+  window.switchTheme = function (themeName) {
+    localStorage.setItem('selectedTemplate', themeName);
     location.reload();
-  });
+  };
 
-  // ===============================
-  // Fullscreen Preview
-  // ===============================
-  $('#openPreview').click(function () {
-    $('#modalPreviewContent').html($('#previewContent').html());
-    $('#previewModal').modal('show');
-  });
+  // Load localStorage data (if any)
+  function loadData() {
+    const data = JSON.parse(localStorage.getItem('resumeData'));
+    if (!data) return;
 
-  // ===============================
-  // Hide Default Inputs
-  // ===============================
-  $('#educationSection .education-entry').remove();
-  $('#experienceSection .experience-entry').remove();
+    $('#fullName').val(data.fullName).trigger('input');
+    $('#email').val(data.email).trigger('input');
+    $('#phone').val(data.phone).trigger('input');
+    $('#dob').val(data.dob).trigger('input');
+    $('#bio').val(data.bio).trigger('input');
+
+    data.education.forEach(edu => {
+      const entry = $(`
+        <div class="education-entry mb-2">
+          <input type="text" class="form-control mb-1" placeholder="Institution Name" value="${edu.institution}" />
+          <input type="text" class="form-control mb-1" placeholder="Branch / Major" value="${edu.branch}" />
+          <input type="text" class="form-control mb-1 year-input" placeholder="From Year" value="${edu.from}" />
+          <input type="text" class="form-control mb-1 year-input" placeholder="Passout Year" value="${edu.to}" />
+          <button class="btn btn-danger btn-sm remove-edu mt-1"><i class="fas fa-trash"></i> Remove</button>
+        </div>`);
+      $('#educationSection').append(entry);
+    });
+
+    data.experience.forEach(exp => {
+      const entry = $(`
+        <div class="experience-entry mb-2">
+          <input type="text" class="form-control mb-1" placeholder="Company Name" value="${exp.company}" />
+          <input type="text" class="form-control mb-1 year-input" placeholder="From" value="${exp.from}" />
+          <input type="text" class="form-control mb-1 year-input" placeholder="To" value="${exp.to}" />
+          <textarea class="form-control mb-1">${exp.desc}</textarea>
+          <button class="btn btn-danger btn-sm remove-exp mt-1"><i class="fas fa-trash"></i> Remove</button>
+        </div>`);
+      $('#experienceSection').append(entry);
+    });
+
+    data.skills.forEach(skill => {
+      const entry = $(`
+        <div class="skill-entry mb-2">
+          <input type="text" class="form-control mb-1" value="${skill.name}" />
+          <input type="range" class="custom-range" min="0" max="100" value="${skill.level}" />
+          <button class="btn btn-danger btn-sm mt-1 remove-skill"><i class="fas fa-trash"></i> Remove</button>
+        </div>`);
+      $('#skillsSection').append(entry);
+    });
+
+    updateEducationPreview();
+    updateExperiencePreview();
+    updateSkillsPreview();
+
+    const img = localStorage.getItem('profileImage');
+    if (img) $('#previewImg').attr('src', img);
+  }
+  $(function () {
+  const $img = $('#previewImg');
+  const $info = $img.prevAll('p, h2').get().reverse();
+  const $container = $('<div class="top-section"></div>');
+  const $text = $('<div class="text-details"></div>').append($info);
+  $container.append($text).append($img.addClass('profile-pic'));
+  $('#resumePreview').prepend($container);
 });
 
-// ===============================
-// Theme Selection Startup
-// ===============================
-$('.btn-group .btn').click(function () {
-  const selectedTheme = $(this).data('theme');
-  $('body').removeClass().addClass(selectedTheme);
-  $('#themeSwitcher').val(selectedTheme);
-  $('#themeSelectionScreen').hide();
-  $('#mainResumeBuilder').show();
-  updatePreview();
+
+  loadData();
 });
