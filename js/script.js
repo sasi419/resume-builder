@@ -188,14 +188,15 @@ $(document).ready(function () {
   });
 
   // Print / PDF / Reset
-  $('#printBtn').click(() => window.print());
-  $('#pdfBtn').click(() => html2pdf().from(document.getElementById('resumePreview')).save('My_Resume.pdf'));
-  $('#resetBtn').click(() => {
-    if (confirm("Are you sure you want to reset everything?")) {
-      localStorage.clear();
-      location.reload();
-    }
-  });
+  $('#printBtn').click(() => {
+  const originalContent = document.body.innerHTML;
+  const previewContent = document.getElementById('previewColumn').innerHTML;
+
+  document.body.innerHTML = `<div class="container">${previewContent}</div>`;
+  window.print();
+  document.body.innerHTML = originalContent;
+  location.reload(); // Reload to restore functionality
+});
 
   // Theme switch (optional)
   window.switchTheme = function (themeName) {

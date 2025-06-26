@@ -71,7 +71,7 @@ h4 {
 /* === PROFILE IMAGE === */
 #resumePreview img.profile-pic {
   width: 100px;
-  height: 100px;
+  height: auto;
   object-fit: cover;
   border-radius: 8px;
   border: 3px double #007bff;

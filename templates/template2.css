@@ -40,7 +40,7 @@ body {
 
 #resumePreview img.profile-pic {
   width: 100px;
-  height: 100px;
+  height: auto;
   object-fit: cover;
   border-radius: 5%;
   border: 3px groove #61dafb;
