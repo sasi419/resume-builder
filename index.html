@@ -2,150 +2,50 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Resume Builder</title>
-  
-  <!-- Favicons -->
-  <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png" />
-  <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png" />
-  <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png" />
-  <link rel="manifest" href="img/site.webmanifest" />
-
-  <!-- Bootstrap, jQuery UI, Font Awesome -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
-  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-
-  <!-- Load selected template CSS dynamically -->
-  <script>
-    const selectedTemplate = localStorage.getItem('selectedTemplate') || 'template1';
-    document.write(`<link rel="stylesheet" href="templates/${selectedTemplate}.css">`);
-  </script>
-  <link rel="stylesheet" href="css/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Select Resume Template</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-  <div class="container-fluid px-3 py-4">
-    <div class="row">
+  <div class="container text-center px-3 py-3">
+    <h2 class="mb-3 font-weight-bold">Let’s Start Building Your Resume</h2>
+    <p class="text-muted mb-5">Pick a template you like. You’ll customize the details in the next step!</p>
 
-      <!-- Form Column -->
-      <div class="col-md-6 bg-light p-4" id="formColumn">
-      <h2 class="mb-4 text-center" style="font-size: 2rem;"><i class="fas fa-file-alt "></i> Resume Builder</h2>
+    <div class="row justify-content-center">
 
-
-        <!-- Theme Switcher -->
-        <div class="form-group">
-          <label><strong><i class="fas fa-palette"></i> Choose Your Resume Style:</strong></label>
-          <div class="btn-group btn-group-sm">
-            <button class="btn btn-outline-primary" onclick="switchTheme('template1')">Blue</button>
-            <button class="btn btn-outline-dark" onclick="switchTheme('template2')">Dark</button>
-            <button class="btn btn-outline-secondary" onclick="switchTheme('template3')">Minimal</button>
-            <button class="btn btn-outline-warning" onclick="switchTheme('template4')">Elegant</button>
-          </div>
-        </div>
-        <h3 class="mb-4"><i class="fas fa-pen-nib"></i> Enter Your Details</h3>
-
-        <!-- Profile Image -->
-        <div class="form-group">
-          <label for="profileImageInput"><i class="fas fa-image"></i> Upload Profile Image</label>
-          <input type="file" class="form-control-file" id="profileImageInput">
-        </div>
-
-        <!-- Personal Info -->
-        <div class="input-group mb-2">
-          <div class="input-group-prepend">
-            <span class="input-group-text"><i class="fas fa-user"></i></span>
-          </div>
-          <input type="text" id="fullName" class="form-control" placeholder="Full Name" />
-        </div>
-
-        <div class="input-group mb-2">
-          <div class="input-group-prepend">
-            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-          </div>
-          <input type="email" id="email" class="form-control" placeholder="Email" />
-        </div>
-
-        <div class="input-group mb-2">
-          <div class="input-group-prepend">
-            <span class="input-group-text"><i class="fas fa-phone-alt"></i></span>
-          </div>
-          <input type="tel" id="phone" class="form-control" placeholder="Phone" />
-        </div>
-
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
-          </div>
-          <input type="text" id="dob" class="form-control" placeholder="Date of Birth" />
-        </div>
-
-        <!-- Bio -->
-        <div class="form-group">
-          <label for="bio"><i class="fas fa-align-left"></i> Short Bio</label>
-          <textarea id="bio" class="form-control" maxlength="200" placeholder="Write a short bio..."></textarea>
-          <small id="bioCount" class="form-text text-muted">200 characters remaining</small>
-        </div>
-
-        <!-- Education -->
-        <div class="form-group">
-          <h5><i class="fas fa-graduation-cap"></i> Education</h5>
-          <div id="educationSection"></div>
-          <button id="addEducation" class="btn btn-outline-primary btn-sm mt-2"><i class="fas fa-plus"></i> Add Education</button>
-        </div>
-
-        <!-- Experience -->
-        <div class="form-group">
-          <h5><i class="fas fa-briefcase"></i> Experience</h5>
-          <div id="experienceSection"></div>
-          <button id="addExperience" class="btn btn-outline-primary btn-sm mt-2"><i class="fas fa-plus"></i> Add Experience</button>
-        </div>
-
-        <!-- Skills -->
-        <div class="form-group">
-          <h5><i class="fas fa-tools"></i> Skills</h5>
-          <div class="form-check form-switch mb-2">
-            <input class="form-check-input" type="checkbox" id="toggleSkillType">
-            <label class="form-check-label" for="toggleSkillType">Use Progress Bar</label>
-          </div>
-          <div id="skillsSection"></div>
-          <button id="addSkill" class="btn btn-outline-primary btn-sm mt-2"><i class="fas fa-plus"></i> Add Skill</button>
-        </div>
-
-        <!-- Actions -->
-       <div class="d-flex justify-content-between align-items-center p-4 mt-4">
-        <button id="saveBtn" class="btn btn-success"><i class="fas fa-save"></i> Save</button>
-        <button id="printBtn" class="btn btn-primary"><i class="fas fa-print"></i> Print</button></div>
+      <!-- Template 1 -->
+      <div class="col-lg-5 col-md-6 col-sm-12 template-preview m-3">
+        <div class="preview-img template1 mb-3">Clean & Blue Resume</div>
+        <button class="btn btn-primary btn-block" onclick="selectTemplate('template1')">Use Template 1</button>
       </div>
 
-      <!-- Preview Column -->
-      <div class="col-md-6 bg-white p-4" id="previewColumn">
-        <div id="resumePreview" class="border p-4 rounded">
-          <img id="previewImg" src="img/Default-user.png.png" class="img-thumbnail mb-3" width="120" alt="Profile Image"/>
-          <h2 id="previewName">Your Name</h2>
-          <p id="previewBio" class="text-muted">Your short bio will appear here.</p>
-          <p id="previewEmail"><i class="fas fa-envelope"></i> Email: </p>
-          <p id="previewPhone"><i class="fas fa-phone-alt"></i> Phone: </p>
-          <p id="previewDOB"><i class="fas fa-calendar-alt"></i> DOB: </p>
-
-          <hr/>
-
-          <h4><i class="fas fa-graduation-cap"></i> Education</h4>
-          <div id="previewEducation"></div>
-
-          <h4><i class="fas fa-briefcase"></i> Experience</h4>
-          <div id="previewExperience"></div>
-
-          <h4><i class="fas fa-chart-line"></i> Skills</h4>
-          <div id="previewSkills"></div>
-        </div>
+      <!-- Template 2 -->
+      <div class="col-lg-5 col-md-6 col-sm-12 template-preview m-3">
+        <div class="preview-img template2 mb-3">Professional & Dark Theme</div>
+        <button class="btn btn-dark btn-block" onclick="selectTemplate('template2')">Use Template 2</button>
       </div>
+
+      <!-- Template 3 -->
+      <div class="col-lg-5 col-md-6 col-sm-12 template-preview m-3">
+        <div class="preview-img template3 mb-3">Minimalist Gray Design</div>
+        <button class="btn btn-secondary btn-block" onclick="selectTemplate('template3')">Use Template 3</button>
+      </div>
+
+      <!-- Template 4 -->
+      <div class="col-lg-5 col-md-6 col-sm-12 template-preview m-3">
+        <div class="preview-img template4 mb-3">Elegant Red Style</div>
+        <button class="btn btn-danger btn-block" onclick="selectTemplate('template4')">Use Template 4</button>
+      </div>
+
     </div>
   </div>
 
-  <!-- Scripts -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-  <script src="js/script.js"></script>
+  <script>
+    function selectTemplate(templateName) {
+      localStorage.setItem('selectedTemplate', templateName);
+      window.location.href = "resume_builder.html";
+    }
+  </script>
 </body>
 </html>
