@@ -58,6 +58,11 @@ $(document).ready(function () {
     updateEducationPreview();
   });
 
+  $(document).on('click', '.remove-edu', function () {
+    $(this).closest('.education-entry').remove();
+    updateEducationPreview();
+  });
+
   function updateEducationPreview() {
     let html = '';
     $('#educationSection .education-entry').each(function () {
@@ -80,6 +85,11 @@ $(document).ready(function () {
         <button class="btn btn-danger btn-sm remove-exp mt-1"><i class="fas fa-trash"></i> Remove</button>
       </div>`);
     $('#experienceSection').append(newEntry);
+    updateExperiencePreview();
+  });
+
+  $(document).on('click', '.remove-exp', function () {
+    $(this).closest('.experience-entry').remove();
     updateExperiencePreview();
   });
 
@@ -106,7 +116,12 @@ $(document).ready(function () {
     $('#skillsSection').append(newSkill);
     updateSkillsPreview();
   });
-  
+
+  $(document).on('click', '.remove-skill', function () {
+    $(this).closest('.skill-entry').remove();
+    updateSkillsPreview();
+  });
+
   function updateSkillsPreview() {
     let html = '';
     $('#skillsSection .skill-entry').each(function () {
